@@ -7,11 +7,12 @@
   <td class="issue-hours centered"><%= h entry.issue ? format_hours(entry.issue.total_spent_hours) : format_hours(0.0) %></td>
   <td class="centered">
   <% if entry.editable_by?(@user) %>
-      <%= link_to(image_tag('edit.png'), {:controller => 'timelog', :action => 'edit', :id => entry},
-                  :title => l(:button_edit)) %>
-      <%= link_to(image_tag('delete.png'), {:controller => 'spent_time', :action => 'destroy_entry', :id => entry.id, :from => @from, :to => @to},
-                  :remote => true,
-                  :data => {:confirm => l(:text_are_you_sure)}) %>
+      <%= spent_time_icon_link('edit', 'edit.png', l(:button_edit),
+                               {:controller => 'timelog', :action => 'edit', :id => entry}) %>
+      <%= spent_time_icon_link('del', 'delete.png', l(:button_delete),
+                               {:controller => 'spent_time', :action => 'destroy_entry', :id => entry.id, :from => @from, :to => @to},
+                               :remote => true,
+                               :data => {:confirm => l(:text_are_you_sure)}) %>
   <% end %>
   </td>
 </tr>

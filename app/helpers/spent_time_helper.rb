@@ -1,4 +1,15 @@
 module SpentTimeHelper
+  # Icon-only link that matches the look of the running Redmine version:
+  # SVG sprite icons on Redmine >= 6.0, the classic PNG images before.
+  def spent_time_icon_link(icon, png, label, url, options = {})
+    if respond_to?(:sprite_icon)
+      link_to(sprite_icon(icon, label, icon_only: true), url,
+              options.merge(:title => label, :class => "icon-only icon-#{icon}"))
+    else
+      link_to(image_tag(png, :alt => label), url, options.merge(:title => label))
+    end
+  end
+
   def authorized_for?(action)
     User.current.allowed_to?(action, nil, {:global => :true})
   end
